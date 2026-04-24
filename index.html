@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anup Kumar — Android Developer</title>
+
+<!-- SEO & Open Graph (BUG FIX #6) -->
+<meta name="description" content="Anup Kumar — B.Tech CSE student & Android Developer building production-grade apps with Kotlin, Java, MVVM, Firebase & REST APIs. Open to internships.">
+<meta name="keywords" content="Anup Kumar, Android Developer, Kotlin, Java, MVVM, Firebase, Android Intern, BML Munjal University">
+<meta property="og:title" content="Anup Kumar | Android Developer">
+<meta property="og:description" content="Building production-grade Android apps with Kotlin, MVVM, Firebase & REST APIs. Open to internship opportunities.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Anup Kumar | Android Developer">
+<meta name="theme-color" content="#3DDC84">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ===== DESIGN TOKENS ===== */
+  :root {
+    --bg: #060610;
+    --surface: #0E0E1C;
+    --card: #13132A;
+    --card-hover: #161630;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(61,220,132,0.3);
+    --green: #3DDC84;
+    --green-dim: rgba(61,220,132,0.10);
+    --green-glow: rgba(61,220,132,0.22);
+    --cyan: #00C8FF;
+    --cyan-dim: rgba(0,200,255,0.10);
+    --purple: #7B5FFF;
+    --purple-dim: rgba(123,95,255,0.12);
+    --orange: #FF6B35;
+    --text: #E4E4F0;
+    --muted: #6A6A88;
+    --soft: #9898B8;
+    --ff-head: 'Outfit', sans-serif;
+    --ff-body: 'DM Sans', sans-serif;
+    --ff-mono: 'JetBrains Mono', monospace;
+    --radius-sm: 6px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+  }
+
+  /* ===== RESET ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--ff-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===== ATMOSPHERIC LAYERS ===== */
+  /* Noise grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* Grid background */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  /* Scroll progress bar — NEW */
+  #progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--green), var(--cyan));
+    z-index: 2000;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 8px var(--green-glow);
+  }
+
+  /* Cursor glow — GPU optimised (BUG FIX JS) */
+  .cursor-glow {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,220,132,0.035), transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    transition: opacity 0.3s;
+    will-change: transform;
+    top: 0; left: 0;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 60px;
+    background: rgba(6,6,16,0.80);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  nav.scrolled { background: rgba(6,6,16,0.95); }
+
+  .nav-logo {
+    font-family: var(--ff-head);
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--green);
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--text); }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0; right: 0;
+    height: 1px;
+    background: var(--green);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { transform: scaleX(1); }
+  .nav-links a.active { color: var(--green); }
+
+  .nav-right { display: flex; gap: 12px; align-items: center; }
+  /* Resume download button — NEW */
+  .nav-resume {
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    color: var(--soft);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 7px 14px;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-resume:hover { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+  .nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    color: var(--green);
+    text-decoration: none;
+    border: 1px solid var(--green);
+    padding: 8px 18px;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--green); color: #000; }
+
+  /* Mobile hamburger */
+  .nav-mobile-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .nav-mobile-btn span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 61px; left: 0; right: 0;
+    background: rgba(6,6,16,0.97);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px 28px;
+    z-index: 999;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: var(--ff-mono);
+    font-size: 0.85rem;
+    color: var(--soft);
+    text-decoration: none;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--green); }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 60px 80px;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(61,220,132,0.055) 0%, transparent 70%);
+    top: -150px; left: -250px;
+    pointer-events: none;
+  }
+  .hero-glow-2 {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(123,95,255,0.04) 0%, transparent 70%);
+    bottom: -100px; right: -100px;
+    pointer-events: none;
+  }
+  .hero-content { max-width: 720px; position: relative; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-dim);
+    border: 1px solid rgba(61,220,132,0.28);
+    color: var(--green);
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .badge-dot {
+    width: 7px; height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  .hero h1 {
+    font-family: var(--ff-head);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 .line-green { color: var(--green); }
+  .hero h1 .line-muted { color: var(--muted); }
+
+  .hero-sub {
+    margin-top: 28px;
+    font-size: 1.05rem;
+    color: var(--soft);
+    max-width: 520px;
+    line-height: 1.85;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+
+  /* Location + availability tag — NEW */
+  .hero-meta {
+    margin-top: 18px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.25s ease both;
+  }
+  .meta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 100px;
+    letter-spacing: 0.06em;
+  }
+  .meta-pill.green { color: var(--green); border-color: rgba(61,220,132,0.25); background: var(--green-dim); }
+
+  .hero-actions {
+    margin-top: 42px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green);
+    color: #000;
+    font-family: var(--ff-head);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    padding: 14px 32px;
+    border-radius: var(--radius-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 36px var(--green-glow); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--ff-head);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    padding: 14px 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--green); background: var(--green-dim); }
+
+  /* NEW: Resume download btn */
+  .btn-resume {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--cyan);
+    font-family: var(--ff-head);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(0,200,255,0.3);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-resume:hover { background: var(--cyan-dim); border-color: var(--cyan); }
+
+  .hero-socials {
+    margin-top: 52px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .hero-socials span {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .social-links { display: flex; gap: 10px; }
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .social-link:hover { color: var(--green); border-color: var(--green); background: var(--green-dim); }
+
+  /* ===== HERO PHONE MOCKUPS ===== */
+  .hero-visual {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .phone-mock {
+    width: 175px; height: 350px;
+    background: var(--card);
+    border: 2px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    position: relative;
+  }
+  .phone-mock.tall {
+    height: 410px;
+    transform: translateY(-30px);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(61,220,132,0.12);
+  }
+  .phone-notch { width: 55px; height: 9px; background: #0d0d1a; border-radius: 10px; margin: 10px auto 0; }
+  .phone-screen { margin: 7px; height: calc(100% - 36px); border-radius: 20px; overflow: hidden; }
+
+  .screen-weather { background: linear-gradient(160deg, #0D1B3E 0%, #162447 50%, #1F4068 100%); height: 100%; padding: 18px 14px; }
+  .w-city { font-family: var(--ff-head); font-size: 0.65rem; color: rgba(255,255,255,0.55); text-align: center; margin-bottom: 2px; }
+  .w-temp { font-family: var(--ff-head); font-size: 3rem; font-weight: 900; color: #fff; text-align: center; line-height: 1; margin-bottom: 2px; }
+  .w-icon { text-align: center; font-size: 1.8rem; margin: 8px 0; }
+  .w-cond { font-size: 0.55rem; color: rgba(255,255,255,0.45); text-align: center; margin-bottom: 14px; }
+  .w-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); border-radius: 7px; padding: 5px 8px; margin-bottom: 4px; font-size: 0.52rem; color: rgba(255,255,255,0.7); }
+
+  .screen-event { background: #12122A; height: 100%; padding: 14px 12px; }
+  .e-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .e-logo { font-family: var(--ff-head); font-weight: 800; font-size: 0.85rem; color: var(--cyan); }
+  .e-av { width: 20px; height: 20px; background: linear-gradient(135deg,var(--purple),var(--cyan)); border-radius: 50%; }
+  .e-banner { background: linear-gradient(135deg,#5B42F3,#00C8FF); border-radius: 10px; padding: 10px; margin-bottom: 10px; }
+  .e-b-tag { font-size: 0.42rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px; }
+  .e-b-title { font-family: var(--ff-head); font-size: 0.72rem; font-weight: 800; color: #fff; margin-bottom: 3px; }
+  .e-b-meta { font-size: 0.42rem; color: rgba(255,255,255,0.7); }
+  .e-sec { font-size: 0.44rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 7px; }
+  .e-item { background: rgba(255,255,255,0.04); border-radius: 7px; padding: 7px; margin-bottom: 5px; border-left: 2px solid var(--cyan); display: flex; gap: 7px; align-items: center; }
+  .e-dot { width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; flex-shrink: 0; }
+  .e-name { font-size: 0.52rem; font-weight: 600; color: var(--text); margin-bottom: 1px; }
+  .e-sub { font-size: 0.42rem; color: var(--muted); }
+
+  /* ===== SECTION STRUCTURE ===== */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-divider {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    z-index: 1;
+  }
+  .section-label {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--green);
+    opacity: 0.4;
+  }
+  h2.section-title {
+    font-family: var(--ff-head);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 56px;
+    line-height: 1.1;
+  }
+
+  /* ===== ABOUT ===== */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: start; }
+  .about-text p { color: var(--soft); font-size: 1rem; margin-bottom: 18px; line-height: 1.85; }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .stat-card:hover { border-color: var(--green); transform: translateY(-2px); }
+  .stat-num { font-family: var(--ff-head); font-size: 2rem; font-weight: 900; color: var(--green); line-height: 1; margin-bottom: 5px; }
+  .stat-lbl { font-size: 0.78rem; color: var(--muted); font-family: var(--ff-mono); letter-spacing: 0.04em; }
+
+  .edu-card {
+    margin-top: 22px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    border-left: 3px solid var(--green);
+    transition: border-color 0.2s;
+  }
+  .edu-card:hover { border-color: var(--green); }
+  .edu-school { font-family: var(--ff-head); font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+  .edu-degree { font-size: 0.85rem; color: var(--soft); margin-bottom: 8px; }
+  .edu-meta { display: flex; gap: 16px; font-family: var(--ff-mono); font-size: 0.7rem; color: var(--muted); flex-wrap: wrap; }
+  .edu-cgpa { color: var(--soft); }
+
+  /* ===== EXPERIENCE ===== */
+  .exp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--cyan));
+  }
+  .exp-card:hover { border-color: rgba(61,220,132,0.3); transform: translateY(-3px); }
+
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+  .exp-role { font-family: var(--ff-head); font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+  .exp-company { color: var(--green); font-family: var(--ff-mono); font-size: 0.82rem; }
+  .exp-period {
+    font-family: var(--ff-mono);
+    font-size: 0.73rem;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+  .exp-bullets li { padding-left: 20px; position: relative; color: var(--soft); font-size: 0.95rem; line-height: 1.7; }
+  .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--green); font-size: 0.8rem; top: 3px; }
+  .exp-bullets li strong { color: var(--text); }
+
+  .exp-tags { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-family: var(--ff-mono); font-size: 0.68rem; padding: 4px 12px; border-radius: 100px; letter-spacing: 0.04em; border: 1px solid; }
+  .tag-green { color: var(--green); border-color: rgba(61,220,132,0.3); background: var(--green-dim); }
+  .tag-cyan { color: var(--cyan); border-color: rgba(0,200,255,0.3); background: var(--cyan-dim); }
+  .tag-purple { color: var(--purple); border-color: rgba(123,95,255,0.3); background: var(--purple-dim); }
+  .tag-default { color: var(--soft); border-color: var(--border); background: var(--surface); }
+
+  /* ===== PROJECTS ===== */
+  .projects-grid { display: flex; flex-direction: column; gap: 36px; }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  .project-card:hover {
+    border-color: rgba(61,220,132,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+  .project-card.reverse { grid-template-columns: 360px 1fr; }
+  .project-card.reverse .project-visual { order: -1; }
+
+  .project-content { padding: 44px; }
+  .project-num { font-family: var(--ff-mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.15em; margin-bottom: 14px; }
+  .project-title { font-family: var(--ff-head); font-size: 1.75rem; font-weight: 800; margin-bottom: 7px; letter-spacing: -0.02em; }
+  .project-subtitle { font-family: var(--ff-mono); font-size: 0.72rem; color: var(--green); letter-spacing: 0.1em; margin-bottom: 18px; text-transform: uppercase; }
+  .project-desc { color: var(--soft); font-size: 0.95rem; line-height: 1.8; margin-bottom: 24px; }
+  .project-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 30px; }
+  .project-features li { font-size: 0.85rem; color: var(--soft); padding-left: 18px; position: relative; }
+  .project-features li::before { content: '→'; position: absolute; left: 0; color: var(--green); }
+
+  .project-links { display: flex; gap: 12px; }
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .project-link.gh { color: var(--green); border: 1px solid rgba(61,220,132,0.4); background: var(--green-dim); }
+  .project-link.gh:hover { background: var(--green); color: #000; border-color: var(--green); }
+
+  .project-visual {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+  .visual-weather { background: linear-gradient(135deg, #0D1B3E, #1a2a5e); }
+  .visual-event { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+  .visual-draw { background: linear-gradient(135deg, #0f0f23, #1a1a3e); }
+
+  /* Phone display in projects */
+  .phone-display {
+    width: 155px; height: 300px;
+    background: #0d0d1a;
+    border-radius: var(--radius-xl);
+    border: 2px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    position: relative;
+  }
+  .pd-notch { width: 48px; height: 8px; background: #060610; border-radius: 10px; margin: 10px auto 0; }
+  .pd-screen { margin: 6px; height: calc(100% - 32px); border-radius: 20px; overflow: hidden; }
+
+  .ps-weather { background: linear-gradient(180deg, #0D1B3E, #162040 60%, #1F2A55); height: 100%; padding: 16px 12px 12px; font-family: var(--ff-head); }
+  .pw-st { display: flex; justify-content: space-between; font-size: 0.42rem; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
+  .pw-loc { text-align: center; font-size: 0.58rem; color: rgba(255,255,255,0.55); margin-bottom: 1px; }
+  .pw-temp { text-align: center; font-size: 2.8rem; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 1px; }
+  .pw-feels { text-align: center; font-size: 0.44rem; color: rgba(255,255,255,0.35); margin-bottom: 6px; }
+  .pw-icon { text-align: center; font-size: 1.6rem; margin-bottom: 5px; }
+  .pw-cond { text-align: center; font-size: 0.5rem; color: rgba(255,255,255,0.55); margin-bottom: 10px; }
+  .pw-ft { font-size: 0.42rem; color: rgba(255,255,255,0.28); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+  .pw-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.44rem; color: rgba(255,255,255,0.6); }
+
+  .ps-event { background: #12122A; height: 100%; padding: 14px 12px 12px; }
+  .pe-st { display: flex; justify-content: space-between; font-size: 0.42rem; color: rgba(255,255,255,0.35); margin-bottom: 12px; }
+  .pe-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .pe-logo { font-family: var(--ff-head); font-weight: 800; font-size: 0.82rem; color: var(--cyan); }
+  .pe-av { width: 20px; height: 20px; background: linear-gradient(135deg,var(--purple),var(--cyan)); border-radius: 50%; }
+  .pe-banner { background: linear-gradient(135deg,#5B42F3,#00C8FF); border-radius: 10px; padding: 9px; margin-bottom: 9px; }
+  .pe-bl { font-size: 0.4rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+  .pe-bt { font-family: var(--ff-head); font-size: 0.68rem; font-weight: 800; color: #fff; margin-bottom: 2px; }
+  .pe-bm { font-size: 0.4rem; color: rgba(255,255,255,0.65); }
+  .pe-sec { font-size: 0.4rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .pe-item { background: rgba(255,255,255,0.04); border-radius: 7px; padding: 6px; margin-bottom: 5px; border-left: 2px solid var(--cyan); display: flex; gap: 6px; align-items: center; }
+  .pe-di { width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; flex-shrink: 0; }
+  .pe-nm { font-size: 0.48rem; font-weight: 600; color: var(--text); margin-bottom: 1px; }
+  .pe-sb { font-size: 0.4rem; color: var(--muted); }
+
+  /* ===== SKILLS ===== */
+  .skills-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .skill-group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 26px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-group:hover { border-color: rgba(61,220,132,0.2); transform: translateY(-2px); }
+  .sg-title {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    color: var(--green);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .skill-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    font-family: var(--ff-mono);
+    font-size: 0.67rem;
+    padding: 4px 11px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--soft);
+    transition: all 0.15s;
+    cursor: default;
+  }
+  .chip:hover { background: var(--green-dim); border-color: rgba(61,220,132,0.35); color: var(--green); }
+  .chip.primary { background: var(--green-dim); border-color: rgba(61,220,132,0.28); color: var(--green); font-weight: 600; }
+
+  /* ===== ACHIEVEMENTS ===== */
+  .achieve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .achieve-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .achieve-card:hover { border-color: rgba(61,220,132,0.3); transform: translateY(-2px); }
+  .ach-icon { font-size: 1.6rem; width: 48px; height: 48px; background: var(--green-dim); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ach-title { font-family: var(--ff-head); font-weight: 700; font-size: 0.95rem; margin-bottom: 5px; }
+  .ach-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.65; }
+
+  /* ===== CONTACT ===== */
+  .contact-wrapper {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .contact-wrapper:hover { border-color: rgba(61,220,132,0.2); }
+  .contact-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(61,220,132,0.06), transparent 70%);
+    pointer-events: none;
+  }
+  .contact-title { font-family: var(--ff-head); font-size: 2.4rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 14px; }
+  .contact-sub { color: var(--soft); font-size: 1rem; max-width: 480px; margin: 0 auto 36px; line-height: 1.75; }
+  .contact-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    color: var(--soft);
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .contact-link:hover { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+  /* Resume link in contact — highlight */
+  .contact-link.resume-dl { border-color: rgba(0,200,255,0.3); color: var(--cyan); }
+  .contact-link.resume-dl:hover { border-color: var(--cyan); background: var(--cyan-dim); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy { font-family: var(--ff-mono); font-size: 0.7rem; color: var(--muted); }
+  .footer-copy span { color: var(--green); }
+  .footer-right { display: flex; align-items: center; gap: 6px; font-family: var(--ff-mono); font-size: 0.68rem; color: var(--muted); }
+  .footer-dot { width: 5px; height: 5px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.75); }
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(-30px); }
+    50% { transform: translateY(-38px); }
+  }
+  .phone-mock.tall { animation: float 4s ease-in-out infinite; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1000px) {
+    nav { padding: 16px 24px; }
+    .nav-links, .nav-resume, .nav-cta { display: none; }
+    .nav-mobile-btn { display: flex; }
+
+    .hero { padding: 100px 24px 60px; }
+    .hero-visual { display: none; }
+
+    section { padding: 60px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .project-card, .project-card.reverse { grid-template-columns: 1fr; }
+    .project-card.reverse .project-visual { order: 0; }
+    .project-visual { height: 280px; }
+    .project-content { padding: 28px; }
+    .achieve-grid { grid-template-columns: 1fr; }
+    .contact-wrapper { padding: 36px 24px; }
+    footer { padding: 20px 24px; flex-direction: column; gap: 10px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS BAR (NEW) -->
+<div id="progress-bar"></div>
+
+<div class="grid-bg"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">Anup<span>.dev</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <!-- BUG FIX: Resume download link added (was completely missing) -->
+    <a href="Resume.pdf" download class="nav-resume" rel="noopener">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Resume
+    </a>
+    <a href="mailto:anup20102001@gmail.com" class="nav-cta">Hire Me</a>
+  </div>
+  <!-- Mobile -->
+  <button class="nav-mobile-btn" id="mobileBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#experience" onclick="closeMobile()">Experience</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#skills" onclick="closeMobile()">Skills</a>
+  <a href="#achievements" onclick="closeMobile()">Achievements</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="Resume.pdf" download rel="noopener" onclick="closeMobile()">⬇ Download Resume</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      Open to Opportunities — Android Developer Intern
+    </div>
+    <h1>
+      <span class="line-muted">Anup Kumar</span><br>
+      <span class="line-green">Android</span> Developer.
+    </h1>
+    <p class="hero-sub">
+      B.Tech CSE student building <strong>production-grade Android apps</strong> with Kotlin, Java, MVVM, Firebase &amp; REST APIs — from real-time weather engines to campus event platforms.
+    </p>
+
+    <!-- NEW: Location + availability pills -->
+    <div class="hero-meta">
+      <span class="meta-pill">📍 Gurgaon, Haryana</span>
+      <span class="meta-pill green">✓ Open to Remote &amp; On-site</span>
+      <span class="meta-pill">🎓 BML Munjal University</span>
+    </div>
+
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        View My Work
+      </a>
+      <!-- BUG FIX: Resume download added here too (was completely missing) -->
+      <a href="Resume.pdf" download class="btn-resume" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download CV
+      </a>
+      <a href="https://github.com/anup-Kumar2004" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+
+    <div class="hero-socials">
+      <span>Find me on</span>
+      <div class="social-links">
+        <!-- BUG FIX: All external links now have rel="noopener noreferrer" -->
+        <a href="https://github.com/anup-Kumar2004" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <!-- NOTE: Update this URL to your exact LinkedIn profile slug -->
+        <a href="https://www.linkedin.com/in/anup-kumar-b2a2a5249/" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="mailto:anup20102001@gmail.com" class="social-link" title="Email">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone Mockups -->
+  <div class="hero-visual">
+    <div class="phone-mock">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="screen-event">
+          <div class="e-head"><div class="e-logo">EventPro</div><div class="e-av"></div></div>
+          <div class="e-banner">
+            <div class="e-b-tag">Featured</div>
+            <div class="e-b-title">🎉 Tech Fest 2025</div>
+            <div class="e-b-meta">Mar 15 · Auditorium · 120 joined</div>
+          </div>
+          <div class="e-sec">Upcoming</div>
+          <div class="e-item"><div class="e-dot" style="background:rgba(91,66,243,0.2)">💻</div><div><div class="e-name">Hackathon 3.0</div><div class="e-sub">Apr 2 · 48 joined</div></div></div>
+          <div class="e-item"><div class="e-dot" style="background:rgba(0,200,255,0.1)">🤖</div><div><div class="e-name">AI Workshop</div><div class="e-sub">Apr 8 · Lab C</div></div></div>
+          <div class="e-item"><div class="e-dot" style="background:rgba(61,220,132,0.1)">⚡</div><div><div class="e-name">Coding Sprint</div><div class="e-sub">Apr 14 · Online</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-mock tall">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="screen-weather">
+          <div class="w-city">📍 New Delhi, India</div>
+          <div class="w-icon">⛅</div>
+          <div class="w-temp">27°</div>
+          <div class="w-cond">Partly Cloudy · Feels like 30°</div>
+          <div class="w-row"><span>Mon</span><span>🌤</span><span>29°</span></div>
+          <div class="w-row"><span>Tue</span><span>🌧</span><span>24°</span></div>
+          <div class="w-row"><span>Wed</span><span>⛅</span><span>26°</span></div>
+          <div class="w-row"><span>Thu</span><span>☀️</span><span>31°</span></div>
+          <div class="w-row"><span>Fri</span><span>🌤</span><span>28°</span></div>
+          <div class="w-row"><span>Sat</span><span>🌧</span><span>23°</span></div>
+          <div class="w-row"><span>Sun</span><span>☀️</span><span>30°</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ABOUT -->
+<section id="about" class="reveal">
+  <div class="section-label">01 — About</div>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm <strong>Anup Kumar</strong>, a B.Tech Computer Science student at <strong>BML Munjal University</strong> with a genuine passion for building Android apps that solve real problems — not just portfolio pieces.</p>
+      <p>I work primarily in <strong>Kotlin &amp; Java</strong> and apply clean architecture patterns like <strong>MVVM</strong> with ViewModel, LiveData, and Coroutines. From integrating <strong>Firebase real-time backends</strong> to consuming complex <strong>REST APIs</strong> with Retrofit, I've handled the full Android stack end to end.</p>
+      <p>I previously interned at <strong>Areksoft Technologies</strong> where I shipped real features into the Recordrr production app — a custom OTP security system and Google Drive cloud integration used by actual customers.</p>
+      <div class="edu-card">
+        <div class="edu-school">BML Munjal University</div>
+        <div class="edu-degree">B.Tech — Computer Science &amp; Engineering</div>
+        <div class="edu-meta">
+          <span>Sept 2022 – Present</span>
+          <!-- IMPROVEMENT: CGPA de-emphasised — no longer highlighted green -->
+          <span class="edu-cgpa">CGPA: 6.7 / 10</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="about-stats">
+        <div class="stat-card"><div class="stat-num">10+</div><div class="stat-lbl">Android Apps Built</div></div>
+        <div class="stat-card"><div class="stat-num">300+</div><div class="stat-lbl">DSA Problems Solved</div></div>
+        <div class="stat-card"><div class="stat-num">2</div><div class="stat-lbl">Languages (Kotlin + Java)</div></div>
+        <div class="stat-card"><div class="stat-num">SIH</div><div class="stat-lbl">Zonal Qualifier 2023</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="reveal">
+  <div class="section-label">02 — Experience</div>
+  <h2 class="section-title">Where I've Worked</h2>
+  <div class="exp-card">
+    <div class="exp-header">
+      <div>
+        <div class="exp-role">Android Developer Intern</div>
+        <div class="exp-company">Areksoft Technologies Pvt. Ltd. · Hyderabad, India</div>
+      </div>
+      <!-- IMPROVEMENT: "Summer 2024" avoids drawing attention to short duration -->
+      <div class="exp-period">Summer 2024</div>
+    </div>
+    <ul class="exp-bullets">
+      <li>Built a <strong>custom OTP API</strong> for secure session management in the Recordrr production app using Retrofit and JSON parsing — replacing an insecure legacy auth flow.</li>
+      <li>Implemented <strong>call recording uploads via Google Drive REST API</strong>, enabling cloud-backed storage for all user recordings, with proper OAuth token handling.</li>
+      <li>Developed a <strong>call log retrieval module</strong> using Android's ContentProvider API and cursor-based data access for real-time lead tracking across the sales team.</li>
+    </ul>
+    <div class="exp-tags">
+      <span class="tag tag-green">Kotlin</span>
+      <span class="tag tag-green">Retrofit</span>
+      <span class="tag tag-cyan">Google Drive API</span>
+      <span class="tag tag-cyan">ContentProvider</span>
+      <span class="tag tag-purple">OTP Auth</span>
+      <span class="tag tag-default">JSON Parsing</span>
+      <span class="tag tag-default">REST APIs</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects" class="reveal">
+  <div class="section-label">03 — Projects</div>
+  <h2 class="section-title">Things I've Built</h2>
+  <div class="projects-grid">
+
+    <!-- WeatherApp -->
+    <div class="project-card">
+      <div class="project-content">
+        <div class="project-num">Project 01 · 2026</div>
+        <div class="project-title">WeatherApp</div>
+        <div class="project-subtitle">Kotlin · MVVM · Retrofit · Coroutines · Lottie</div>
+        <p class="project-desc">A real-time Android weather app that auto-detects your location and delivers beautiful forecasts. Built with MVVM + LiveData, parallel Coroutines API calls, and Material Design 3.</p>
+        <ul class="project-features">
+          <li>MVVM + LiveData with parallel Kotlin Coroutines API calls</li>
+          <li>Open-Meteo + Nominatim (reverse geocoding) APIs via Retrofit</li>
+          <li>FusedLocationProvider for automatic GPS-based city detection</li>
+          <li>Lottie animations, Shimmer skeleton loading, pull-to-refresh</li>
+          <li>7-day and hourly forecast via RecyclerView + Material Design 3</li>
+        </ul>
+        <div class="project-links">
+          <!-- BUG FIX: rel="noopener noreferrer" added -->
+          <a href="https://github.com/anup-Kumar2004/WeatherApp" target="_blank" rel="noopener noreferrer" class="project-link gh">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+      <div class="project-visual visual-weather">
+        <div class="phone-display">
+          <div class="pd-notch"></div>
+          <div class="pd-screen">
+            <div class="ps-weather">
+              <div class="pw-st"><span>9:41</span><span>◼◼◼</span></div>
+              <div class="pw-loc">📍 New Delhi, India</div>
+              <div class="pw-temp">27°</div>
+              <div class="pw-feels">Feels like 30° · Humidity 65%</div>
+              <div class="pw-icon">⛅</div>
+              <div class="pw-cond">Partly Cloudy</div>
+              <div class="pw-ft">7-Day Forecast</div>
+              <div class="pw-row"><span>Mon</span><span>🌤</span><span>29°/22°</span></div>
+              <div class="pw-row"><span>Tue</span><span>🌧</span><span>24°/19°</span></div>
+              <div class="pw-row"><span>Wed</span><span>⛅</span><span>26°/20°</span></div>
+              <div class="pw-row"><span>Thu</span><span>☀️</span><span>31°/24°</span></div>
+              <div class="pw-row"><span>Fri</span><span>🌤</span><span>28°/21°</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EventPro -->
+    <div class="project-card reverse">
+      <div class="project-content">
+        <div class="project-num">Project 02 · 2025</div>
+        <div class="project-title">EventPro</div>
+        <div class="project-subtitle">Java · XML · Firebase Realtime DB · Google Auth</div>
+        <p class="project-desc">A campus event management platform with dual-role support. Hosts create and manage events with live invite-by-email; participants browse, join, and track all synced in real time via Firebase.</p>
+        <ul class="project-features">
+          <li>Dual role system — Hosts create/invite, Participants browse/join</li>
+          <li>Firebase Realtime Database for instant event state syncing</li>
+          <li>Firebase Auth — Email/Password + Google Sign-In via OAuth 2.0</li>
+          <li>RecyclerView + CardView event feed with Navigation Drawer UI</li>
+          <li>Role-based UI flows dynamically rendered per user type</li>
+        </ul>
+        <div class="project-links">
+          <!-- BUG FIX #1: Fixed broken/truncated SVG path (was rendering blank icon) -->
+          <a href="https://github.com/anup-Kumar2004/EventPro-Event-Management-Android-Application-" target="_blank" rel="noopener noreferrer" class="project-link gh">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+      <div class="project-visual visual-event">
+        <div class="phone-display">
+          <div class="pd-notch"></div>
+          <div class="pd-screen">
+            <div class="ps-event">
+              <div class="pe-st"><span>9:41</span><span>◼◼◼</span></div>
+              <div class="pe-hd"><div class="pe-logo">EventPro</div><div class="pe-av"></div></div>
+              <div class="pe-banner">
+                <div class="pe-bl">Featured Event</div>
+                <div class="pe-bt">🎉 Tech Fest 2025</div>
+                <div class="pe-bm">📅 Mar 15 · 🏛 Auditorium · 120 joined</div>
+              </div>
+              <div class="pe-sec">Upcoming Events</div>
+              <div class="pe-item"><div class="pe-di" style="background:rgba(91,66,243,0.2)">💻</div><div><div class="pe-nm">Hackathon 3.0</div><div class="pe-sb">Apr 2 · 48 participants</div></div></div>
+              <div class="pe-item"><div class="pe-di" style="background:rgba(0,200,255,0.1)">🤖</div><div><div class="pe-nm">AI Workshop</div><div class="pe-sb">Apr 8 · Lab C</div></div></div>
+              <div class="pe-item"><div class="pe-di" style="background:rgba(61,220,132,0.1)">⚡</div><div><div class="pe-nm">Coding Sprint</div><div class="pe-sb">Apr 14 · Online</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DrawingApp -->
+    <div class="project-card">
+      <div class="project-content">
+        <div class="project-num">Project 03 · 2025</div>
+        <div class="project-title">DrawingApp</div>
+        <div class="project-subtitle">Kotlin · Canvas API · Paint &amp; Path · MediaStore</div>
+        <p class="project-desc">A feature-rich creative drawing app built from scratch using Android's Canvas API — no drawing libraries. Supports custom brushes, color-picker, undo/redo stack, and direct gallery export.</p>
+        <ul class="project-features">
+          <li>Built entirely on Canvas API with Paint &amp; Path — zero libraries</li>
+          <li>Full undo/redo stack with O(1) history management</li>
+          <li>HSV color-picker wheel for precision color control</li>
+          <li>Adjustable brush size with visual preview</li>
+          <li>Save-to-gallery via MediaStore + background image picker</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/anup-Kumar2004/DrawingApp" target="_blank" rel="noopener noreferrer" class="project-link gh">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+      <div class="project-visual visual-draw">
+        <div class="phone-display">
+          <div class="pd-notch"></div>
+          <div class="pd-screen">
+            <div style="background:#f8f8f8;height:100%;padding:12px 10px 10px">
+              <div style="display:flex;justify-content:space-between;font-size:0.4rem;color:#aaa;margin-bottom:8px"><span>9:41</span><span>◼◼◼</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <div style="font-family:var(--ff-head);font-weight:800;font-size:0.78rem;color:#1a1a1a">DrawingApp</div>
+                <div style="display:flex;gap:4px">
+                  <div style="width:18px;height:18px;background:#e8e8e8;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.55rem">↩</div>
+                  <div style="width:18px;height:18px;background:#e8e8e8;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.55rem">↪</div>
+                  <div style="width:18px;height:18px;background:#1a1a1a;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.5rem;color:#fff">💾</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:3px;margin-bottom:7px;background:#efefef;padding:4px;border-radius:7px;align-items:center">
+                <div style="width:20px;height:20px;background:#1a1a1a;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.55rem;color:#fff">✏️</div>
+                <div style="width:20px;height:20px;background:#e0e0e0;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.55rem">⬜</div>
+                <div style="width:20px;height:20px;background:#e0e0e0;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.55rem">⭕</div>
+                <div style="width:20px;height:20px;background:#e0e0e0;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.55rem">🧹</div>
+                <div style="margin-left:3px;font-size:0.4rem;color:#999">8px</div>
+              </div>
+              <div style="background:#fff;border-radius:9px;border:1px solid #e0e0e0;height:160px;position:relative;overflow:hidden">
+                <svg width="100%" height="100%" viewBox="0 0 135 160" style="position:absolute;top:0;left:0">
+                  <path d="M8 55 Q25 28 50 48 Q75 68 100 38 Q118 22 128 32" stroke="#3DDC84" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+                  <path d="M35 115 Q46 96 62 106 Q72 114 65 126 Q55 138 42 131 Q32 124 35 112" stroke="#7B5FFF" stroke-width="3" fill="none" stroke-linecap="round"/>
+                  <circle cx="98" cy="85" r="16" fill="none" stroke="#FF9800" stroke-width="2.8"/>
+                  <line x1="98" y1="63" x2="98" y2="57" stroke="#FF9800" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="112" y1="72" x2="117" y2="67" stroke="#FF9800" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="112" y1="98" x2="117" y2="103" stroke="#FF9800" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="98" y1="107" x2="98" y2="113" stroke="#FF9800" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="84" y1="98" x2="79" y2="103" stroke="#FF9800" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="84" y1="72" x2="79" y2="67" stroke="#FF9800" stroke-width="2.2" stroke-linecap="round"/>
+                  <path d="M12 138 Q22 122 32 142 Q42 158 52 143 Q59 132 65 148" stroke="#F44336" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M70 130 Q80 115 90 125 Q96 133 88 143 Q80 150 72 142" stroke="#00C8FF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div style="display:flex;gap:4px;margin-top:7px;justify-content:center;align-items:center">
+                <div style="width:14px;height:14px;border-radius:50%;background:#F44336;border:2px solid #333;transform:scale(1.2)"></div>
+                <div style="width:13px;height:13px;border-radius:50%;background:#FF9800;border:1.5px solid rgba(0,0,0,0.1)"></div>
+                <div style="width:13px;height:13px;border-radius:50%;background:#3DDC84;border:1.5px solid rgba(0,0,0,0.1)"></div>
+                <div style="width:13px;height:13px;border-radius:50%;background:#00C8FF;border:1.5px solid rgba(0,0,0,0.1)"></div>
+                <div style="width:13px;height:13px;border-radius:50%;background:#7B5FFF;border:1.5px solid rgba(0,0,0,0.1)"></div>
+                <div style="width:13px;height:13px;border-radius:50%;background:#1a1a1a;border:1.5px solid rgba(0,0,0,0.1)"></div>
+                <div style="width:13px;height:13px;border-radius:50%;background:#fff;border:1.5px solid #ddd"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SKILLS -->
+<section id="skills" class="reveal">
+  <div class="section-label">04 — Skills</div>
+  <h2 class="section-title">My Tech Stack</h2>
+  <div class="skills-wrapper">
+    <div class="skill-group">
+      <div class="sg-title">🚀 Languages</div>
+      <div class="skill-chips">
+        <span class="chip primary">Kotlin</span>
+        <span class="chip primary">Java</span>
+        <span class="chip">XML</span>
+        <span class="chip">C++</span>
+        <span class="chip">SQL</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="sg-title">🤖 Android &amp; Jetpack</div>
+      <div class="skill-chips">
+        <span class="chip primary">Android SDK</span>
+        <span class="chip primary">MVVM</span>
+        <span class="chip">ViewModel</span>
+        <span class="chip">LiveData</span>
+        <span class="chip">Coroutines</span>
+        <span class="chip">Kotlin Flow</span>
+        <span class="chip">Room DB</span>
+        <span class="chip">Navigation</span>
+        <span class="chip">ViewBinding</span>
+        <span class="chip">DataBinding</span>
+        <span class="chip">RecyclerView</span>
+        <span class="chip">MotionLayout</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="sg-title">🔥 Firebase &amp; Libraries</div>
+      <div class="skill-chips">
+        <span class="chip primary">Firebase Auth</span>
+        <span class="chip primary">Firestore</span>
+        <span class="chip">Realtime DB</span>
+        <span class="chip">FCM</span>
+        <span class="chip">Retrofit 2</span>
+        <span class="chip">OkHttp</span>
+        <span class="chip">Lottie</span>
+        <span class="chip">Shimmer</span>
+        <span class="chip">SharedPreferences</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="sg-title">🛠 Tools &amp; APIs</div>
+      <div class="skill-chips">
+        <span class="chip primary">Android Studio</span>
+        <span class="chip">Git &amp; GitHub</span>
+        <span class="chip">Postman</span>
+        <span class="chip">Figma</span>
+        <span class="chip">REST APIs</span>
+        <span class="chip">Google Drive API</span>
+        <span class="chip">FusedLocation</span>
+        <span class="chip">Open-Meteo</span>
+        <span class="chip">Nominatim</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ACHIEVEMENTS -->
+<!-- BUG FIX #4: Added to nav. Section id="achievements" already existed but was never in the nav. -->
+<section id="achievements" class="reveal">
+  <div class="section-label">05 — Achievements</div>
+  <h2 class="section-title">Milestones</h2>
+  <div class="achieve-grid">
+    <div class="achieve-card">
+      <div class="ach-icon">🏆</div>
+      <div>
+        <div class="ach-title">Smart India Hackathon — Zonal Level</div>
+        <div class="ach-desc">Qualified and competed at the Zonal Level of SIH 2023, one of India's largest national-level hackathons with thousands of teams competing.</div>
+      </div>
+    </div>
+    <div class="achieve-card">
+      <div class="ach-icon">💡</div>
+      <div>
+        <div class="ach-title">300+ DSA Problems Solved</div>
+        <div class="ach-desc">Consistently solved 300+ Data Structures &amp; Algorithms problems on LeetCode and Coding Ninjas, building strong problem-solving foundations.</div>
+      </div>
+    </div>
+    
+    <div class="achieve-card">
+      <div class="ach-icon">📱</div>
+      <div>
+        <div class="ach-title">Production App Internship</div>
+        <div class="ach-desc">Shipped real features — OTP security and Google Drive integration — into a live production Android app at Areksoft Technologies used by actual customers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact" class="reveal">
+  <div class="contact-wrapper">
+    <div class="section-label" style="justify-content:center;margin-bottom:20px">06 — Contact</div>
+    <div class="contact-title">Let's Build Together 🚀</div>
+    <p class="contact-sub">I'm actively looking for Android Developer internship opportunities. If you're building something and want a passionate, hands-on dev on your team — let's talk.</p>
+    <div class="contact-links">
+      <a href="mailto:anup20102001@gmail.com" class="contact-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        anup20102001@gmail.com
+      </a>
+      <!-- BUG FIX: Resume download added in contact section (was completely missing) -->
+      <a href="Resume.pdf" download class="contact-link resume-dl" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+      <a href="https://github.com/anup-Kumar2004" target="_blank" rel="noopener noreferrer" class="contact-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <!-- NOTE: Update to your exact LinkedIn profile URL -->
+      <a href="" target="_blank" rel="noopener noreferrer" class="contact-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="tel:+918816012403" class="contact-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +91 88160 12403
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <!-- BUG FIX #2: Year updated to 2026, now also auto-updates via JS -->
+  <div class="footer-copy">Built by <span>Anup Kumar</span> · Android Developer · <span id="footer-year">2026</span></div>
+  <div class="footer-right">
+    <div class="footer-dot"></div>
+    <span>Open to opportunities</span>
+  </div>
+</footer>
+
+<script>
+  /* ===========================
+     SCROLL PROGRESS BAR (NEW)
+  =========================== */
+  const progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    progressBar.style.width = (scrolled / total * 100) + '%';
+  }
+
+  /* ===========================
+     CURSOR GLOW — GPU optimised
+     BUG FIX: uses transform instead of left/top
+  =========================== */
+  const glow = document.getElementById('cursorGlow');
+  let curX = 0, curY = 0, glowX = 0, glowY = 0;
+  document.addEventListener('mousemove', e => { curX = e.clientX; curY = e.clientY; });
+  function animateGlow() {
+    glowX += (curX - glowX) * 0.08;
+    glowY += (curY - glowY) * 0.08;
+    glow.style.transform = `translate(${glowX - 250}px, ${glowY - 250}px)`;
+    requestAnimationFrame(animateGlow);
+  }
+  animateGlow();
+
+  /* ===========================
+     SCROLL EVENTS — throttled via rAF
+     BUG FIX: was causing layout thrashing
+  =========================== */
+  let ticking = false;
+  const nav = document.getElementById('main-nav');
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateProgress();
+
+        // Nav scroll class
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+
+        // Active nav link highlighting
+        let cur = '';
+        sections.forEach(s => { if (window.scrollY >= s.offsetTop - 240) cur = s.id; });
+        links.forEach(l => {
+          const isActive = l.getAttribute('href') === '#' + cur;
+          l.classList.toggle('active', isActive);
+        });
+
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ===========================
+     SCROLL REVEAL
+  =========================== */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ===========================
+     MOBILE MENU
+  =========================== */
+  const mobileBtn = document.getElementById('mobileBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  mobileBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  /* ===========================
+     FOOTER YEAR — auto-updates
+     BUG FIX #2: no longer hardcoded
+  =========================== */
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
