@@ -29,7 +29,7 @@ Click here directly:
 
 ## 🔗 Connect With Me
 
-- 💼 LinkedIn: https://www.linkedin.com/in/your-link/
+- 💼 LinkedIn: https://www.linkedin.com/in/anup-kumar-03b0b1354/
 - 💻 GitHub: https://github.com/anup-Kumar2004
 - 📧 Email: anup20102001@gmail.com
 
