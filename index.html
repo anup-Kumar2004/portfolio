@@ -2343,18 +2343,18 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   z-index: 10;
 }
 .viz-search-rider-icon {
-  font-size: 1.6rem;
-  filter: drop-shadow(0 0 10px rgba(255,179,0,0.6));
+  font-size: 2.6rem;
+  filter: drop-shadow(0 0 14px rgba(255,179,0,0.7));
 }
 .viz-search-rider-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.5rem;
-  color: rgba(255,179,0,0.85);
+  font-size: 0.75rem;
+  color: rgba(255,179,0,0.9);
   letter-spacing: 0.06em;
-  background: rgba(10,10,30,0.8);
-  padding: 2px 7px;
+  background: rgba(10,10,30,0.85);
+  padding: 4px 10px;
   border-radius: 100px;
-  border: 1px solid rgba(255,179,0,0.3);
+  border: 1px solid rgba(255,179,0,0.4);
   white-space: nowrap;
 }
 
@@ -2365,24 +2365,24 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   z-index: 8;
   transition: filter 0.4s ease;
 }
 .viz-search-driver-icon {
-  font-size: 1.4rem;
+  font-size: 2.2rem;
   filter: grayscale(1) brightness(0.4);
   transition: filter 0.5s ease;
 }
 .viz-search-driver-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.44rem;
-  color: rgba(255,255,255,0.25);
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
   letter-spacing: 0.05em;
-  background: rgba(10,10,30,0.75);
-  padding: 2px 6px;
+  background: rgba(10,10,30,0.8);
+  padding: 3px 9px;
   border-radius: 100px;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
   white-space: nowrap;
   transition: color 0.4s ease, border-color 0.4s ease;
 }
@@ -3528,6 +3528,965 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   transform: translateX(-50%) translateY(0);
 }
 
+
+/* ═══════════════════════════════════════════════
+   CHALRIDE DEMO SECTION — VIDEOS + APK
+═══════════════════════════════════════════════ */
+
+/* ── Section wrapper ── */
+.cr-demo-section {
+  margin-bottom: 48px;
+}
+
+.cr-demo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.cr-demo-title-block {}
+
+.cr-demo-eyebrow {
+  font-family: var(--ff-mono);
+  font-size: 0.68rem;
+  color: var(--amber);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cr-demo-eyebrow::after {
+  content: '';
+  flex: 1;
+  max-width: 40px;
+  height: 1px;
+  background: rgba(255,179,0,0.3);
+}
+
+.cr-demo-heading {
+  font-family: var(--ff-head);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+/* APK download button */
+.btn-apk {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(61,220,132,0.12), rgba(61,220,132,0.06));
+  border: 1px solid rgba(61,220,132,0.45);
+  color: var(--green);
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  padding: 13px 24px;
+  border-radius: var(--radius-sm);
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-apk::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(61,220,132,0.18), rgba(61,220,132,0.08));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.btn-apk:hover {
+  border-color: var(--green);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(61,220,132,0.2);
+}
+.btn-apk:hover::before { opacity: 1; }
+.btn-apk svg { flex-shrink: 0; }
+.btn-apk-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1;
+}
+.btn-apk-label { font-size: 0.88rem; font-weight: 700; }
+.btn-apk-sub {
+  font-family: var(--ff-mono);
+  font-size: 0.58rem;
+  color: rgba(61,220,132,0.6);
+  letter-spacing: 0.04em;
+  font-weight: 400;
+}
+
+/* ── Main player card ── */
+.cr-player-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 16px;
+  position: relative;
+  transition: border-color 0.3s;
+}
+.cr-player-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #FF6B35, #FFB300, #FF6B35);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+  z-index: 2;
+}
+.cr-player-card:hover { border-color: rgba(255,179,0,0.25); }
+
+/* Player top bar */
+.cr-player-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+.cr-player-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cr-player-badge {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  color: var(--amber);
+  background: rgba(255,179,0,0.1);
+  border: 1px solid rgba(255,179,0,0.3);
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.cr-player-title {
+  font-family: var(--ff-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.cr-player-duration {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+/* Dual phone labels above video */
+.cr-player-phone-labels {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 22px 0;
+  pointer-events: none;
+}
+.cr-phone-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.cr-phone-label-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+
+/* Video container */
+.cr-video-wrap {
+  position: relative;
+  background: #000;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.cr-video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Gate overlay (before play) */
+.cr-video-gate {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: linear-gradient(160deg, #0d0d1f 0%, #111128 100%);
+  z-index: 10;
+  transition: opacity 0.5s ease;
+  cursor: pointer;
+}
+.cr-video-gate.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cr-gate-phones {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.cr-gate-phone-mock {
+  width: 48px;
+  height: 88px;
+  background: #1a1a30;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,179,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 1.1rem;
+  position: relative;
+  overflow: hidden;
+}
+.cr-gate-phone-mock::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #FF6B35, #FFB300);
+}
+.cr-gate-phone-mock.tall {
+  height: 106px;
+  border-color: rgba(255,179,0,0.55);
+  box-shadow: 0 0 24px rgba(255,107,53,0.2);
+}
+.cr-gate-phone-label {
+  font-family: var(--ff-mono);
+  font-size: 0.42rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.cr-gate-play-btn {
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B35, #FFB300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 0 rgba(255,179,0,0.5);
+  animation: crPlayPulse 2s ease-in-out infinite;
+  transition: transform 0.2s;
+}
+.cr-video-gate:hover .cr-gate-play-btn {
+  transform: scale(1.1);
+}
+@keyframes crPlayPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(255,179,0,0.5); }
+  50%      { box-shadow: 0 0 0 14px rgba(255,179,0,0); }
+}
+.cr-gate-play-btn svg { margin-left: 4px; }
+
+.cr-gate-text {
+  text-align: center;
+}
+.cr-gate-main {
+  font-family: var(--ff-head);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+.cr-gate-sub {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+/* Central play overlay (pause state) */
+.cr-center-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 8;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.cr-center-play.show { opacity: 1; }
+.cr-center-icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.65);
+  border: 2px solid rgba(255,179,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+/* Custom controls bar */
+.cr-controls {
+  padding: 12px 18px 16px;
+  background: rgba(6,6,16,0.95);
+  position: relative;
+  z-index: 5;
+}
+
+/* Progress / seek bar */
+.cr-seek-wrap {
+  position: relative;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.cr-seek-track {
+  position: absolute;
+  left: 0; right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: visible;
+}
+.cr-seek-buffer {
+  height: 100%;
+  background: rgba(255,255,255,0.12);
+  border-radius: 4px;
+  width: 0%;
+  transition: width 0.5s linear;
+}
+.cr-seek-fill {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #FF6B35, #FFB300);
+  border-radius: 4px;
+  width: 0%;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(255,179,0,0.4);
+}
+.cr-seek-thumb {
+  position: absolute;
+  top: 50%;
+  width: 14px; height: 14px;
+  background: #FFB300;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 3px rgba(255,179,0,0.25);
+  pointer-events: none;
+  transition: transform 0.15s;
+  left: 0%;
+}
+.cr-seek-wrap:hover .cr-seek-thumb {
+  transform: translate(-50%, -50%) scale(1.25);
+}
+
+/* Chapter markers on seek bar */
+.cr-chapter-dot {
+  position: absolute;
+  top: 50%;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  border: 1.5px solid rgba(255,179,0,0.7);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 3;
+  transition: background 0.2s, transform 0.15s;
+}
+.cr-chapter-dot:hover {
+  background: #FFB300;
+  transform: translate(-50%, -50%) scale(1.4);
+}
+.cr-chapter-dot.passed {
+  background: rgba(255,179,0,0.7);
+}
+
+/* Chapter tooltip */
+.cr-chapter-tooltip {
+  position: absolute;
+  bottom: 26px;
+  transform: translateX(-50%);
+  background: rgba(10,10,30,0.96);
+  border: 1px solid rgba(255,179,0,0.4);
+  border-radius: 7px;
+  padding: 5px 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s;
+  z-index: 20;
+}
+.cr-chapter-dot:hover .cr-chapter-tooltip { opacity: 1; }
+.cr-chapter-tooltip-name {
+  font-family: var(--ff-head);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1px;
+}
+.cr-chapter-tooltip-time {
+  font-family: var(--ff-mono);
+  font-size: 0.52rem;
+  color: var(--amber);
+}
+
+/* Chapter label bar (below seek, shows current chapter) */
+.cr-chapter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  min-height: 18px;
+}
+.cr-chapter-now {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  color: var(--amber);
+  letter-spacing: 0.06em;
+}
+.cr-chapter-name {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  color: var(--soft);
+  letter-spacing: 0.04em;
+}
+
+/* Controls row */
+.cr-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cr-ctrl-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.05);
+  color: var(--soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s;
+  flex-shrink: 0;
+}
+.cr-ctrl-btn:hover {
+  background: rgba(255,179,0,0.12);
+  color: var(--amber);
+  border: 1px solid rgba(255,179,0,0.3);
+}
+.cr-ctrl-btn.active {
+  background: rgba(255,179,0,0.15);
+  color: var(--amber);
+}
+
+/* Big play/pause button */
+.cr-ctrl-play {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #FF6B35, #FFB300);
+  border: none;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+  flex-shrink: 0;
+}
+.cr-ctrl-play:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(255,179,0,0.4);
+}
+
+/* Time display */
+.cr-time-display {
+  font-family: var(--ff-mono);
+  font-size: 0.68rem;
+  color: var(--soft);
+  letter-spacing: 0.04em;
+  min-width: 90px;
+}
+.cr-time-display span { color: var(--muted); }
+
+/* Speed picker */
+.cr-speed-select {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  color: var(--soft);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 5px 8px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.18s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.cr-speed-select:hover, .cr-speed-select:focus {
+  border-color: rgba(255,179,0,0.4);
+  color: var(--amber);
+  background: rgba(255,179,0,0.07);
+}
+.cr-speed-select option { background: #13132A; }
+
+/* Volume slider */
+.cr-vol-wrap {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.cr-vol-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 70px;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+.cr-vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #FFB300;
+  cursor: pointer;
+}
+.cr-vol-slider:hover { background: rgba(255,179,0,0.2); }
+
+/* Right controls group */
+.cr-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* Chapter pills list */
+.cr-chapters-list {
+  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,0.015);
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+  max-height: 0;
+}
+.cr-chapters-list.open { max-height: 340px; }
+.cr-chapters-inner {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cr-chapter-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.18s;
+  position: relative;
+}
+.cr-chapter-pill:hover {
+  background: rgba(255,179,0,0.07);
+}
+.cr-chapter-pill.current {
+  background: rgba(255,179,0,0.1);
+  border: 1px solid rgba(255,179,0,0.2);
+}
+.cr-chapter-pill-num {
+  font-family: var(--ff-mono);
+  font-size: 0.55rem;
+  color: var(--muted);
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.cr-chapter-pill.current .cr-chapter-pill-num { color: var(--amber); }
+.cr-chapter-pill-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+.cr-chapter-pill.current .cr-chapter-pill-dot {
+  background: var(--amber);
+  box-shadow: 0 0 6px rgba(255,179,0,0.6);
+}
+.cr-chapter-pill.passed .cr-chapter-pill-dot { background: rgba(255,179,0,0.4); }
+.cr-chapter-pill-info { flex: 1; }
+.cr-chapter-pill-name {
+  font-family: var(--ff-head);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 1px;
+}
+.cr-chapter-pill.current .cr-chapter-pill-name { color: var(--amber); }
+.cr-chapter-pill-time {
+  font-family: var(--ff-mono);
+  font-size: 0.56rem;
+  color: var(--muted);
+}
+.cr-chapter-now-bar {
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 60%;
+  background: var(--amber);
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+}
+.cr-chapter-pill.current .cr-chapter-now-bar { opacity: 1; }
+.cr-chapter-pill-arrow {
+  font-family: var(--ff-mono);
+  font-size: 0.55rem;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+.cr-chapter-pill:hover .cr-chapter-pill-arrow { opacity: 1; }
+
+/* ── Firebase collapsible video ── */
+.cr-firebase-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 0;
+  transition: border-color 0.3s;
+}
+.cr-firebase-panel::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, #FF4500, #FF6B35, #FF4500);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+.cr-firebase-panel:hover { border-color: rgba(255,100,30,0.3); }
+
+.cr-firebase-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+.cr-firebase-toggle:hover { background: rgba(255,100,30,0.04); }
+
+.cr-firebase-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.cr-firebase-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(255,100,30,0.12);
+  border: 1px solid rgba(255,100,30,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.cr-firebase-info {}
+.cr-firebase-label {
+  font-family: var(--ff-mono);
+  font-size: 0.58rem;
+  color: rgba(255,100,30,0.7);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.cr-firebase-name {
+  font-family: var(--ff-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.cr-firebase-toggle-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cr-firebase-duration {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.cr-firebase-chevron {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, background 0.2s;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.cr-firebase-panel.open .cr-firebase-chevron {
+  transform: rotate(180deg);
+  background: rgba(255,100,30,0.1);
+  border-color: rgba(255,100,30,0.3);
+  color: #FF6B35;
+}
+
+.cr-firebase-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.cr-firebase-panel.open .cr-firebase-body {
+  max-height: 620px;
+}
+
+/* Firebase mini player */
+.cr-fb-player {
+  margin: 0 18px 18px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  position: relative;
+  aspect-ratio: 16/9;
+}
+.cr-fb-player video { width: 100%; height: 100%; object-fit: contain; }
+
+/* Firebase gate */
+.cr-fb-gate {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #100810, #1a0f08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  cursor: pointer;
+  z-index: 5;
+  transition: opacity 0.4s;
+}
+.cr-fb-gate.hidden { opacity: 0; pointer-events: none; }
+.cr-fb-gate-icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(255,100,30,0.15);
+  border: 2px solid rgba(255,100,30,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  animation: crPlayPulse 2s ease-in-out infinite;
+}
+.cr-fb-gate-text {
+  font-family: var(--ff-mono);
+  font-size: 0.7rem;
+  color: rgba(255,150,80,0.8);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+/* Firebase mini controls */
+.cr-fb-controls {
+  padding: 10px 18px 14px;
+  background: rgba(6,6,16,0.97);
+}
+.cr-fb-seek-wrap {
+  position: relative;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.cr-fb-seek-track {
+  position: absolute;
+  left: 0; right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+}
+.cr-fb-seek-fill {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #FF4500, #FF6B35);
+  border-radius: 3px;
+  width: 0%;
+  box-shadow: 0 0 6px rgba(255,100,30,0.5);
+}
+.cr-fb-seek-thumb {
+  position: absolute;
+  top: 50%;
+  width: 11px; height: 11px;
+  background: #FF6B35;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  left: 0%;
+  pointer-events: none;
+}
+.cr-fb-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cr-fb-ctrl-btn {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255,255,255,0.04);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.18s;
+  flex-shrink: 0;
+}
+.cr-fb-ctrl-btn:hover {
+  background: rgba(255,100,30,0.12);
+  color: #FF6B35;
+}
+.cr-fb-ctrl-play {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FF4500, #FF6B35);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.15s;
+  flex-shrink: 0;
+}
+.cr-fb-ctrl-play:hover { transform: scale(1.08); }
+.cr-fb-time {
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .cr-demo-header { flex-direction: column; align-items: flex-start; }
+  .cr-vol-wrap { display: none; }
+  .cr-vol-slider { width: 50px; }
+  .cr-controls-right { gap: 5px; }
+}
+
+
+
+/* ── Animation Tabs Wrapper ── */
+.cr-anim-tabs-wrapper {
+  margin-bottom: 48px;
+}
+.cr-anim-tabs-header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+.cr-anim-tab {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  position: relative;
+  bottom: -1px;
+}
+.cr-anim-tab:hover {
+  background: var(--card-hover);
+  border-color: rgba(255,179,0,0.2);
+}
+.cr-anim-tab.active {
+  background: var(--card);
+  border-color: rgba(255,179,0,0.4);
+  border-bottom-color: var(--card);
+  z-index: 2;
+}
+.cr-anim-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #FF6B35, #FFB300);
+  border-radius: 2px 2px 0 0;
+  top: 0;
+  height: 2px;
+  bottom: auto;
+}
+.cr-anim-tab-icon { font-size: 1.1rem; margin-bottom: 2px; }
+.cr-anim-tab-label {
+  font-family: var(--ff-head);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--soft);
+  transition: color 0.2s;
+}
+.cr-anim-tab.active .cr-anim-tab-label { color: var(--amber); }
+.cr-anim-tab-sub {
+  font-family: var(--ff-mono);
+  font-size: 0.55rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.cr-anim-panel {
+  border: 1px solid rgba(255,179,0,0.25);
+  border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+/* Remove the inner card borders since the panel is the container now */
+.cr-anim-panel .cr-visualizer,
+.cr-anim-panel .cr-waterfall {
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+.cr-anim-panel .cr-visualizer::before,
+.cr-anim-panel .cr-waterfall::before {
+  display: none;
+}
+
 </style>
 
 </head>
@@ -3901,6 +4860,287 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 
     </div><!-- /chalride-showcase -->
 
+
+    <!-- ═══════════════════════════════════════════════
+         CHALRIDE DEMO — VIDEOS + APK DOWNLOAD
+    ═══════════════════════════════════════════════ -->
+    <div class="cr-demo-section">
+
+      <!-- Header row: title + APK button -->
+      <div class="cr-demo-header">
+        <div class="cr-demo-title-block">
+          <div class="cr-demo-eyebrow">🎬 Live Demo</div>
+          <div class="cr-demo-heading">Watch ChalRide in Action</div>
+        </div>
+        <a href="https://drive.google.com/file/d/1odiavozPMm6VdE-fL7DLDCBZfhffalL6/view?usp=sharing"
+           target="_blank" rel="noopener noreferrer" class="btn-apk">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v12m0 0l-4-4m4 4l4-4"/>
+            <rect x="3" y="17" width="18" height="4" rx="2"/>
+          </svg>
+          <div class="cr-btn-apk-meta">
+            <div class="btn-apk-label">Download APK</div>
+            <div class="btn-apk-sub">Android 7.0+ · ChalRide v1.0</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ── Main App Demo Player ── -->
+      <div class="cr-player-card" id="crPlayerCard">
+
+        <!-- Top bar -->
+        <div class="cr-player-topbar">
+          <div class="cr-player-topbar-left">
+            <span class="cr-player-badge">App Demo</span>
+            <span class="cr-player-title">Full Ride Booking & Completion — Dual Device Recording</span>
+          </div>
+          <span class="cr-player-duration">≈ 14 min</span>
+        </div>
+
+        <!-- Dual phone labels -->
+        <div class="cr-player-phone-labels">
+          <div class="cr-phone-label">
+            <div class="cr-phone-label-dot" style="background:#3DDC84;"></div>
+            Rider's Phone
+          </div>
+          <div class="cr-phone-label">
+            <div class="cr-phone-label-dot" style="background:#FFB300;"></div>
+            Driver's Phone
+          </div>
+        </div>
+
+        <!-- Video area -->
+        <div class="cr-video-wrap" id="crVideoWrap">
+          <video id="crVideo" preload="metadata"
+                 src="https://res.cloudinary.com/dkbrlandj/video/upload/v1779436013/Chalride_App_Demo_bqn2vo.mp4">
+          </video>
+
+          <!-- Gate overlay -->
+          <div class="cr-video-gate" id="crGate" onclick="crGatePlay()">
+            <div class="cr-gate-phones">
+              <div>
+                <div class="cr-gate-phone-mock">
+                  <span>🧍</span>
+                  <span style="font-size:0.5rem;color:rgba(255,255,255,0.4);">Rider</span>
+                </div>
+                <div class="cr-gate-phone-label">Rider</div>
+              </div>
+              <div>
+                <div class="cr-gate-phone-mock tall">
+                  <span>🚗</span>
+                  <span style="font-size:0.5rem;color:rgba(255,179,0,0.6);">Driver</span>
+                </div>
+                <div class="cr-gate-phone-label" style="color:rgba(255,179,0,0.5);">Driver</div>
+              </div>
+            </div>
+
+            <div class="cr-gate-play-btn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#000">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+
+            <div class="cr-gate-text">
+              <div class="cr-gate-main">Watch Full App Demo</div>
+              <div class="cr-gate-sub">Sign Up · Booking · Live Tracking · Trip Completion</div>
+            </div>
+          </div>
+
+          <!-- Centre play icon on pause -->
+          <div class="cr-center-play" id="crCenterPlay">
+            <div class="cr-center-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFB300">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+
+        </div><!-- /cr-video-wrap -->
+
+        <!-- Custom controls -->
+        <div class="cr-controls">
+
+          <!-- Seek bar -->
+          <div class="cr-seek-wrap" id="crSeekWrap">
+            <div class="cr-seek-track" id="crSeekTrack">
+              <div class="cr-seek-buffer" id="crSeekBuffer"></div>
+              <div class="cr-seek-fill" id="crSeekFill"></div>
+              <!-- Chapter dots injected by JS -->
+            </div>
+            <div class="cr-seek-thumb" id="crSeekThumb"></div>
+          </div>
+
+          <!-- Current chapter label -->
+          <div class="cr-chapter-bar">
+            <span class="cr-chapter-now">NOW PLAYING</span>
+            <span class="cr-chapter-name" id="crCurrentChapter">—</span>
+          </div>
+
+          <!-- Controls row -->
+          <div class="cr-controls-row">
+
+            <!-- Play / Pause -->
+            <button class="cr-ctrl-play" id="crPlayBtn" onclick="crTogglePlay()">
+              <svg id="crPlayIcon" width="18" height="18" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+
+            <!-- Skip -10s -->
+            <button class="cr-ctrl-btn" title="Rewind 10s" onclick="crVideo.currentTime = Math.max(0, crVideo.currentTime - 10)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/>
+              </svg>
+            </button>
+
+            <!-- Skip +10s -->
+            <button class="cr-ctrl-btn" title="Forward 10s" onclick="crVideo.currentTime = Math.min(crVideo.duration, crVideo.currentTime + 10)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 17l5-5-5-5"/><path d="M6 17l5-5-5-5"/>
+              </svg>
+            </button>
+
+            <!-- Volume -->
+            <div class="cr-vol-wrap">
+              <button class="cr-ctrl-btn" id="crMuteBtn" onclick="crToggleMute()" title="Mute">
+                <svg id="crVolIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+                </svg>
+              </button>
+              <input class="cr-vol-slider" id="crVolSlider" type="range" min="0" max="1" step="0.05" value="1" oninput="crSetVolume(this.value)">
+            </div>
+
+            <!-- Time -->
+            <div class="cr-time-display">
+              <span id="crCurrentTime">0:00</span> <span>/</span> <span id="crDuration">—</span>
+            </div>
+
+            <!-- Right: speed + chapters toggle + fullscreen -->
+            <div class="cr-controls-right">
+
+              <!-- Chapters toggle -->
+              <button class="cr-ctrl-btn" id="crChaptersBtn" title="Chapters" onclick="crToggleChapters()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
+                  <line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/>
+                  <line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+                </svg>
+              </button>
+
+              <!-- Speed -->
+              <select class="cr-speed-select" id="crSpeedSelect" onchange="crSetSpeed(this.value)" title="Playback speed">
+                <option value="0.5">0.5×</option>
+                <option value="1" selected>1×</option>
+                <option value="1.5">1.5×</option>
+                <option value="2">2×</option>
+              </select>
+
+              <!-- Fullscreen -->
+              <button class="cr-ctrl-btn" title="Fullscreen" onclick="crFullscreen()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/>
+                </svg>
+              </button>
+
+            </div>
+          </div><!-- /controls-row -->
+        </div><!-- /cr-controls -->
+
+        <!-- Chapters list (collapsible) -->
+        <div class="cr-chapters-list" id="crChaptersList">
+          <div class="cr-chapters-inner" id="crChaptersInner">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+      </div><!-- /cr-player-card -->
+
+      <!-- ── Firebase Collapsible Panel ── -->
+      <div class="cr-firebase-panel" id="crFirebasePanel">
+        <div class="cr-firebase-toggle" onclick="crToggleFirebase()">
+          <div class="cr-firebase-toggle-left">
+            <div class="cr-firebase-icon">🔥</div>
+            <div class="cr-firebase-info">
+              <div class="cr-firebase-label">Backend · 1 min 10 sec</div>
+              <div class="cr-firebase-name">Firebase Backend Walkthrough — Firestore, Auth & Realtime DB</div>
+            </div>
+          </div>
+          <div class="cr-firebase-toggle-right">
+            <span class="cr-firebase-duration">≈ 1 min</span>
+            <div class="cr-firebase-chevron" id="crFirebaseChevron">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Collapsible body -->
+        <div class="cr-firebase-body" id="crFirebaseBody">
+          <div style="padding: 0 18px 4px;">
+            <div style="font-family:var(--ff-mono);font-size:0.6rem;color:rgba(255,100,30,0.6);letter-spacing:0.08em;padding: 8px 0 10px;">
+              A quick tour of the live Firebase console — driver and rider collections, authentication records, and real-time database presence nodes as they appear during an active ride.
+            </div>
+          </div>
+
+          <div class="cr-fb-player" id="crFbPlayerWrap">
+            <video id="crFbVideo" preload="none"
+                   src="https://res.cloudinary.com/dkbrlandj/video/upload/v1779436043/Firebase_Demo_xkkmlg.mp4">
+            </video>
+
+            <!-- Firebase gate -->
+            <div class="cr-fb-gate" id="crFbGate" onclick="crFbGatePlay()">
+              <div class="cr-fb-gate-icon">🔥</div>
+              <div class="cr-fb-gate-text">Watch Firebase Console Demo</div>
+            </div>
+
+          </div>
+
+          <!-- Firebase mini controls -->
+          <div class="cr-fb-controls">
+            <div class="cr-fb-seek-wrap" id="crFbSeekWrap">
+              <div class="cr-fb-seek-track">
+                <div class="cr-fb-seek-fill" id="crFbSeekFill"></div>
+              </div>
+              <div class="cr-fb-seek-thumb" id="crFbSeekThumb"></div>
+            </div>
+            <div class="cr-fb-controls-row">
+              <button class="cr-fb-ctrl-play" id="crFbPlayBtn" onclick="crFbTogglePlay()">
+                <svg id="crFbPlayIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <button class="cr-fb-ctrl-btn" onclick="crFbVideo.currentTime = Math.max(0, crFbVideo.currentTime - 5)" title="-5s">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/></svg>
+              </button>
+              <button class="cr-fb-ctrl-btn" onclick="crFbVideo.currentTime = Math.min(crFbVideo.duration, crFbVideo.currentTime + 5)" title="+5s">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 17l5-5-5-5"/><path d="M6 17l5-5-5-5"/></svg>
+              </button>
+              <div class="cr-fb-time"><span id="crFbCurrentTime">0:00</span> / <span id="crFbDuration">—</span></div>
+              <button class="cr-fb-ctrl-btn" style="margin-left:auto;" onclick="crFbFullscreen()" title="Fullscreen">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div><!-- /cr-firebase-body -->
+      </div><!-- /cr-firebase-panel -->
+
+    </div><!-- /cr-demo-section -->
+
+
+    <!-- ── Interactive Demos — Tabbed ── -->
+    <div class="cr-anim-tabs-wrapper" id="crAnimTabsWrapper">
+      <div class="cr-anim-tabs-header">
+        <button class="cr-anim-tab active" id="crTabViz" onclick="crSwitchAnimTab('viz')">
+          <span class="cr-anim-tab-icon">🗺️</span>
+          <span class="cr-anim-tab-label">Ride Journey</span>
+          <span class="cr-anim-tab-sub">Full lifecycle animation</span>
+        </button>
+        <button class="cr-anim-tab" id="crTabWf" onclick="crSwitchAnimTab('wf')">
+          <span class="cr-anim-tab-icon">⚡</span>
+          <span class="cr-anim-tab-label">Waterfall Dispatch</span>
+          <span class="cr-anim-tab-sub">Driver matching algorithm</span>
+        </button>
+      </div>
+
+      <div class="cr-anim-panel" id="crPanelViz">
+
     <!-- ── Ride Journey Visualizer ── -->
     <div class="cr-visualizer">
       <div class="cr-viz-title">Live Ride Journey — How a ride unfolds in ChalRide</div>
@@ -4012,21 +5252,21 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
           <!-- Driver 1 — closest -->
           <div class="viz-search-driver" id="vzDriver1">
             <div class="viz-search-driver-icon">🚗</div>
-            <div class="viz-search-driver-label" id="vzD1Label">0.8 km</div>
+            <div class="viz-search-driver-label" id="vzD1Label">2.0 km</div>
             <div class="viz-driver-ping" id="vzD1Ping"></div>
           </div>
 
           <!-- Driver 2 — medium -->
           <div class="viz-search-driver" id="vzDriver2">
             <div class="viz-search-driver-icon">🚙</div>
-            <div class="viz-search-driver-label" id="vzD2Label">1.4 km</div>
+            <div class="viz-search-driver-label" id="vzD2Label">3.5 km</div>
             <div class="viz-driver-ping" id="vzD2Ping"></div>
           </div>
 
           <!-- Driver 3 — farthest -->
           <div class="viz-search-driver" id="vzDriver3">
             <div class="viz-search-driver-icon">🚕</div>
-            <div class="viz-search-driver-label" id="vzD3Label">2.1 km</div>
+            <div class="viz-search-driver-label" id="vzD3Label">5.0 km</div>
             <div class="viz-driver-ping" id="vzD3Ping"></div>
           </div>
 
@@ -4408,8 +5648,10 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 
       <button class="cr-viz-replay" id="vizReplay" onclick="replayRideViz()">↺ Watch Again</button>
     </div>
+      </div>
 
-    <!-- ── Waterfall Dispatch Visualizer ── -->
+      <div class="cr-anim-panel" id="crPanelWf" style="display:none;">
+
     <div class="cr-waterfall">
       <div class="cr-wf-title">Waterfall Dispatch Algorithm — How ChalRide assigns your driver</div>
 
@@ -4443,7 +5685,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
                 <div class="cr-wf-driver-avatar">🚗</div>
                 <div class="cr-wf-driver-info">
                   <div class="cr-wf-driver-name">Ramesh S.</div>
-                  <div class="cr-wf-driver-dist">0.8 km away · Auto</div>
+                  <div class="cr-wf-driver-dist">0.8 km away · Sedan</div>
                 </div>
                 <div class="cr-wf-driver-badge" id="wfBadge1">Pending</div>
                 <div class="cr-wf-countdown" id="wfBar1"></div>
@@ -4452,7 +5694,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
                 <div class="cr-wf-driver-avatar">🚙</div>
                 <div class="cr-wf-driver-info">
                   <div class="cr-wf-driver-name">Suresh K.</div>
-                  <div class="cr-wf-driver-dist">1.4 km away · Mini</div>
+                  <div class="cr-wf-driver-dist">1.4 km away · Sedan</div>
                 </div>
                 <div class="cr-wf-driver-badge" id="wfBadge2">Pending</div>
                 <div class="cr-wf-countdown" id="wfBar2"></div>
@@ -4471,6 +5713,11 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         </div>
         <button class="cr-wf-replay" id="wfReplay" onclick="replayWaterfall()">↺ Watch Again</button>
       </div>
+
+      </div>
+
+    </div><!-- /cr-anim-tabs-wrapper -->
+
     </div>
 
     <!-- Architecture card -->
@@ -4493,7 +5740,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
           <div class="cr-arch-item">Firebase Auth (Email + Google)</div>
           <div class="cr-arch-item">Firebase FCM (notifications)</div>
           <div class="cr-arch-item">Cloudinary (driver photos)</div>
-          <div class="cr-arch-item">Geohash-based driver search</div>
+          <div class="cr-arch-item">Geohash based driver search</div>
         </div>
         <div class="cr-arch-layer">
           <div class="cr-arch-layer-title">🛠 APIs / Services</div>
@@ -4594,9 +5841,9 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <ul class="project-features">
           <li>MVVM + LiveData with parallel Kotlin Coroutines API calls</li>
           <li>Open-Meteo + Nominatim (reverse geocoding) APIs via Retrofit</li>
-          <li>FusedLocationProvider for automatic GPS-based city detection</li>
+          <li>FusedLocationProvider for automatic GPS based city detection</li>
           <li>Lottie animations, Shimmer skeleton loading, pull-to-refresh</li>
-          <li>7-day and hourly forecast via RecyclerView + Material Design 3</li>
+          <li>7 day and hourly forecast via RecyclerView + Material Design 3</li>
         </ul>
         <div class="project-links">
           <a href="https://github.com/anup-Kumar2004/WeatherApp" target="_blank" rel="noopener noreferrer" class="project-link gh">
@@ -4634,7 +5881,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <div class="project-num">Project 02 · 2025</div>
         <div class="project-title">EventPro</div>
         <div class="project-subtitle">Java · XML · Firebase Realtime DB · Google Auth</div>
-        <p class="project-desc">A campus event management platform with dual-role support. Hosts create and manage events with live invite-by-email; participants browse, join, and track all synced in real time via Firebase.</p>
+        <p class="project-desc">A campus event management platform with dual-role support. Hosts create and manage events with live invite by email; participants browse, join, and track all synced in real time via Firebase.</p>
         <ul class="project-features">
           <li>Dual role system — Hosts create/invite, Participants browse/join</li>
           <li>Firebase Realtime Database for instant event state syncing</li>
@@ -4677,7 +5924,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <div class="project-num">Project 03 · 2025</div>
         <div class="project-title">DrawingApp</div>
         <div class="project-subtitle">Kotlin · Canvas API · Paint &amp; Path · MediaStore</div>
-        <p class="project-desc">A feature-rich creative drawing app built from scratch using Android's Canvas API — no drawing libraries. Supports custom brushes, color-picker, undo/redo stack, and direct gallery export.</p>
+        <p class="project-desc">A feature-rich creative drawing app built from scratch using Android's Canvas API - no drawing libraries. Supports custom brushes, color picker, undo/redo stack, and direct gallery export.</p>
         <ul class="project-features">
           <li>Built entirely on Canvas API with Paint &amp; Path — zero libraries</li>
           <li>Full undo/redo stack with O(1) history management</li>
@@ -4824,28 +6071,28 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       <div class="ach-icon">🏆</div>
       <div>
         <div class="ach-title">Smart India Hackathon — Zonal Level</div>
-        <div class="ach-desc">Qualified and competed at the Zonal Level of SIH 2023, one of India's largest national-level hackathons with thousands of teams competing.</div>
+        <div class="ach-desc">Qualified and competed at the Zonal Level of SIH 2023, one of India's largest national level hackathons with thousands of teams competing.</div>
       </div>
     </div>
     <div class="achieve-card">
       <div class="ach-icon">🚗</div>
       <div>
-        <div class="ach-title">ChalRide — Industry-Level Solo Build</div>
-        <div class="ach-desc">Designed and shipped a full-stack ride-sharing app (Uber/Ola equivalent) solo in 40+ days — complete with real-time GPS, foreground services, Firebase presence, and a custom driver-matching algorithm.</div>
+        <div class="ach-title">ChalRide — Industry Level Solo Build</div>
+        <div class="ach-desc">Geohash based waterfall driver matching with atomic Firestore transactions, real-time GPS tracking via OSMDroid, OTP-verified ride starts, crash-safe Firebase RTDB presence, and turn-by-turn navigation powered by OpenRouteService — across a complete dual-role system for riders and drivers.</div>
       </div>
     </div>
     <div class="achieve-card">
       <div class="ach-icon">💡</div>
       <div>
         <div class="ach-title">300+ DSA Problems Solved</div>
-        <div class="ach-desc">Consistently solved 300+ Data Structures &amp; Algorithms problems on LeetCode and Coding Ninjas, building strong problem-solving foundations.</div>
+        <div class="ach-desc">Consistently solved 300+ Data Structures &amp; Algorithms problems on LeetCode and Coding Ninjas, building strong problem solving foundations.</div>
       </div>
     </div>
     <div class="achieve-card">
       <div class="ach-icon">📱</div>
       <div>
         <div class="ach-title">Production App Internship</div>
-        <div class="ach-desc">Shipped real features — OTP security and Google Drive integration — into a live production Android app at Areksoft Technologies used by actual customers.</div>
+        <div class="ach-desc">Shipped real features like OTP security and Google Drive integration, into a live production Android app at Areksoft Technologies used by actual customers.</div>
       </div>
     </div>
   </div>
@@ -4858,7 +6105,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   <div class="contact-wrapper">
     <div class="section-label" style="justify-content:center;margin-bottom:20px">07 — Contact</div>
     <div class="contact-title">Let's Build Together 🚀</div>
-    <p class="contact-sub">I'm actively looking for Android Developer internship opportunities. If you're building something and want a passionate, hands-on dev who can ship industry-grade features — let's talk.</p>
+    <p class="contact-sub">I'm actively looking for Android Developer internship opportunities. If you're building something and want a passionate, hands on dev who can ship industry grade features — let's talk.</p>
     <div class="contact-links">
       <a href="mailto:anup20102001@gmail.com" class="contact-link">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -5156,7 +6403,7 @@ function replayRideViz() {
   const vpRiderR = document.getElementById('vpRiderWait');
   vpRiderR.style.transition = 'none';
   vpRiderR.style.left = '35%';
-  vpRiderR.style.transform = 'translate(-50%, -200%) scale(0.5)';
+  vpRiderR.style.transform = 'translateX(-50%) scale(0.5)';
   vpRiderR.style.opacity = '0';
   vpRiderR.classList.remove('show');
 
@@ -5306,28 +6553,45 @@ async function runRideVisualizer() {
   const mapEl = document.getElementById('vizMap');
   const mw = mapEl.offsetWidth;
   const mh = mapEl.offsetHeight;
-  const cx = mw / 2;   // centre x
-  const cy = mh / 2;   // centre y
+
+  // Place rider at 30% from left, vertically centred — gives lots of room for cars to spread right
+  const cx = mw * 0.30;
+  const cy = mh * 0.50;
 
   // Place rider at centre
   const riderC = document.getElementById('vzRiderCentre');
   riderC.style.left = cx + 'px';
   riderC.style.top  = cy + 'px';
 
-  // Driver positions — scattered around centre at different distances/angles
-  const drivers = [
-    { id: 'vzDriver1', pingId: 'vzD1Ping', x: cx + mw*0.22, y: cy - mh*0.18, dist: 0.8  },
-    { id: 'vzDriver2', pingId: 'vzD2Ping', x: cx - mw*0.28, y: cy - mh*0.10, dist: 1.4  },
-    { id: 'vzDriver3', pingId: 'vzD3Ping', x: cx + mw*0.10, y: cy + mh*0.22, dist: 2.1  },
+  // maxRadius: 5km must reach near the right edge of the map
+  // cx=0.30*mw, right edge = mw, so available rightward space = 0.70*mw
+  // Use 0.64*mw so 5km car lands at ~94% of right space (not clipping)
+  const maxDist   = 5.0;
+  const maxRadius = mw * 0.64;
+
+  // Angles (0°=right, clockwise). Rider at cx=30%*mw, cy=50%*mh.
+  // All verified to stay within map bounds at ~1150x460px.
+  const driverAngles = [
+    330,  // Driver1 (2km,   r≈295px) → ~(572, 82)  upper-right
+    15,   // Driver2 (3.5km, r≈515px) → ~(842, 363) lower-right
+    355,  // Driver3 (5km,   r≈736px) → ~(1078,166) far right
   ];
+  const driverDists = [2.0, 3.5, 5.0];
+
+  const drivers = [
+    { id: 'vzDriver1', pingId: 'vzD1Ping', dist: driverDists[0] },
+    { id: 'vzDriver2', pingId: 'vzD2Ping', dist: driverDists[1] },
+    { id: 'vzDriver3', pingId: 'vzD3Ping', dist: driverDists[2] },
+  ].map((d, i) => {
+    const r = (d.dist / maxDist) * maxRadius;
+    const angle = driverAngles[i] * Math.PI / 180;
+    return { ...d, x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+  });
   drivers.forEach(d => {
     const el = document.getElementById(d.id);
     el.style.left = d.x + 'px';
     el.style.top  = d.y + 'px';
   });
-
-  // Max radar radius = distance to farthest driver + small padding
-  const maxRadius = mw * 0.42;
 
   // Position and size the 3 rings
   ['vzRing1','vzRing2','vzRing3'].forEach(id => {
@@ -5670,12 +6934,12 @@ async function runRideVisualizer() {
   vnPickup.classList.add('show');
   await sleep(1200);
 
-  // Car follows bezier path (slowed: 60ms/frame = ~7.2s total)
+  // Car follows bezier path (28ms/frame = ~3.4s total)
   status.textContent = '🚗 Driver on route to pickup...';
   const etaLabels    = ['⏱ 4 min away', '⏱ 3 min away', '⏱ 2 min away', '⏱ 1 min away', '⏱ Arriving...'];
   let etaIdx         = 0;
   const totalFrames  = 120;
-  const frameDur     = 60; // ms — slower
+  const frameDur     = 28; // ms
   const etaInterval  = Math.floor(totalFrames / etaLabels.length);
   // Button unlocks at 80% of journey
   const unlockFrame  = Math.floor(totalFrames * 0.80);
@@ -5874,15 +7138,11 @@ async function runRideVisualizer() {
   document.getElementById('vnRiderSuccess').classList.add('show');
   document.getElementById('vnDriverSuccess').classList.add('show');
   phase.textContent = 'Step 4 Complete — Ride Started! 🎉';
-  await sleep(3400);
-
-  // ── Wrap up Step 4 ──
-  phase.textContent = 'Step 4 Complete — Ride Started! 🎉';
-  await sleep(2200);
+  await sleep(1200);
 
   // Fade out OTP scene
   onRouteScene.style.opacity = '0';
-  await sleep(600);
+  await sleep(400);
   onRouteScene.classList.remove('active');
   onRouteScene.style.opacity = '';
 
@@ -5911,7 +7171,7 @@ async function runRideVisualizer() {
   vpRiderWait.classList.remove('show');
   vpRiderWait.style.transition = 'none';
   vpRiderWait.style.left = '35%';
-  vpRiderWait.style.transform = 'translate(-50%, -200%) scale(0.5)';
+  vpRiderWait.style.transform = 'translateX(-50%) scale(0.5)';
   vpRiderWait.style.opacity = '0';
   vpPinPickup.classList.remove('show');
   vpPinDest.classList.remove('show');
@@ -5935,13 +7195,13 @@ async function runRideVisualizer() {
   // Rider appears waiting at pickup pin — same pattern as destination exit
   vpRiderWait.style.transition = 'none';
   vpRiderWait.style.left = '37%';
-  vpRiderWait.style.transform = 'translate(-50%, -200%) scale(0.5)';
+  vpRiderWait.style.transform = 'translateX(-50%) scale(0.5)';
   vpRiderWait.style.opacity = '0';
   vpRiderWait.classList.add('show');
   await sleep(60);
   vpRiderWait.style.transition = 'opacity 0.5s ease, transform 0.6s cubic-bezier(0.34,1.56,0.64,1)';
   vpRiderWait.style.opacity = '1';
-  vpRiderWait.style.transform = 'translate(-50%, -200%) scale(1)';
+  vpRiderWait.style.transform = 'translateX(-50%) scale(1)';
   status.textContent = '🧍 Rider waiting at pickup spot...';
   await sleep(1400);
 
@@ -6079,16 +7339,11 @@ async function runRideVisualizer() {
   // ── Sub-scene I: Trip complete celebration ──
   vpComplete.classList.add('show');
   status.textContent  = '🎉 Trip complete — rider dropped off!';
-  phase.textContent   = 'Step 5 Complete — Picked Up ✓';
+  phase.textContent   = 'Step 6 Complete — Trip Finished! 🎉';
   setVizStep(6);
   await sleep(3500);
 
-  // Fade out pickup scene
-  pickupScene.style.opacity = '0';
-  await sleep(700);
-  pickupScene.classList.remove('active');
-  pickupScene.style.opacity = '';
-
+  // Keep the pickup scene visible as the final completed state — just show replay
   document.getElementById('vizReplay').classList.add('show');
 }
 
@@ -6210,6 +7465,340 @@ async function runWaterfall() {
 
   // Show replay
   document.getElementById('wfReplay').classList.add('show');
+}
+
+
+
+/* ═══════════════════════════════════════════════
+   CHALRIDE VIDEO PLAYER — MAIN APP DEMO
+═══════════════════════════════════════════════ */
+
+const crVideo      = document.getElementById('crVideo');
+const crPlayBtn    = document.getElementById('crPlayBtn');
+const crPlayIcon   = document.getElementById('crPlayIcon');
+const crSeekFill   = document.getElementById('crSeekFill');
+const crSeekBuffer = document.getElementById('crSeekBuffer');
+const crSeekThumb  = document.getElementById('crSeekThumb');
+const crSeekTrack  = document.getElementById('crSeekTrack');
+const crSeekWrap   = document.getElementById('crSeekWrap');
+const crCurrentTimeEl = document.getElementById('crCurrentTime');
+const crDurationEl    = document.getElementById('crDuration');
+const crCenterPlay    = document.getElementById('crCenterPlay');
+const crCurrentChapter = document.getElementById('crCurrentChapter');
+
+// Chapters: [name, startSec]
+const crChapters = [
+  { name: 'Account Setup & Onboarding',           start: 0    },
+  { name: 'Rider & Driver Home Screens',           start: 153  },
+  { name: 'Booking a Ride',                        start: 265  },
+  { name: 'Driver Discovery',                      start: 382  },
+  { name: 'Ride Accepted — Driver En Route',       start: 394  },
+  { name: 'OTP Verification',                      start: 501  },
+  { name: 'Trip in Progress',                      start: 541  },
+  { name: 'Trip Complete & Summary',               start: 671  },
+];
+
+let crPlaying = false;
+let crMuted   = false;
+
+function crFmtTime(s) {
+  if (isNaN(s)) return '—';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + String(sec).padStart(2, '0');
+}
+
+function crGatePlay() {
+  const gate = document.getElementById('crGate');
+  gate.classList.add('hidden');
+  crVideo.play().then(() => { crPlaying = true; crUpdatePlayIcon(); }).catch(() => {});
+}
+
+function crTogglePlay() {
+  if (!document.getElementById('crGate').classList.contains('hidden')) {
+    crGatePlay(); return;
+  }
+  if (crPlaying) {
+    crVideo.pause();
+  } else {
+    crVideo.play().catch(() => {});
+  }
+}
+
+function crUpdatePlayIcon() {
+  crPlayIcon.innerHTML = crPlaying
+    ? '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>'
+    : '<path d="M8 5v14l11-7z"/>';
+}
+
+crVideo.addEventListener('play',  () => { crPlaying = true;  crUpdatePlayIcon(); crCenterPlay.classList.remove('show'); });
+crVideo.addEventListener('pause', () => { crPlaying = false; crUpdatePlayIcon(); if (document.getElementById('crGate').classList.contains('hidden')) crCenterPlay.classList.add('show'); });
+crVideo.addEventListener('ended', () => { crPlaying = false; crUpdatePlayIcon(); });
+
+// Click on video area to toggle play
+document.getElementById('crVideoWrap').addEventListener('click', (e) => {
+  if (!document.getElementById('crGate').classList.contains('hidden')) return;
+  crTogglePlay();
+});
+
+// Time update — progress + chapter detection
+crVideo.addEventListener('timeupdate', () => {
+  const pct = (crVideo.currentTime / crVideo.duration) * 100 || 0;
+  crSeekFill.style.width  = pct + '%';
+  crSeekThumb.style.left  = pct + '%';
+  crCurrentTimeEl.textContent = crFmtTime(crVideo.currentTime);
+
+  // Update chapter dots passed state
+  document.querySelectorAll('.cr-chapter-dot').forEach((dot, i) => {
+    dot.classList.toggle('passed', crVideo.currentTime >= crChapters[i].start);
+  });
+
+  // Current chapter
+  let curIdx = 0;
+  crChapters.forEach((ch, i) => { if (crVideo.currentTime >= ch.start) curIdx = i; });
+  crCurrentChapter.textContent = crChapters[curIdx].name;
+
+  // Update chapter pills
+  document.querySelectorAll('.cr-chapter-pill').forEach((pill, i) => {
+    pill.classList.toggle('passed', i < curIdx);
+    pill.classList.toggle('current', i === curIdx);
+  });
+
+  // Buffer
+  if (crVideo.buffered.length > 0) {
+    const bufPct = (crVideo.buffered.end(crVideo.buffered.length - 1) / crVideo.duration) * 100;
+    crSeekBuffer.style.width = bufPct + '%';
+  }
+});
+
+crVideo.addEventListener('loadedmetadata', () => {
+  crDurationEl.textContent = crFmtTime(crVideo.duration);
+  crBuildChapters();
+});
+
+// Seek on track click
+crSeekWrap.addEventListener('click', (e) => {
+  const rect = crSeekTrack.getBoundingClientRect();
+  const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  crVideo.currentTime = pct * crVideo.duration;
+});
+
+// Drag seek
+let crDragging = false;
+crSeekWrap.addEventListener('mousedown', () => { crDragging = true; });
+document.addEventListener('mousemove', (e) => {
+  if (!crDragging) return;
+  const rect = crSeekTrack.getBoundingClientRect();
+  const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  crVideo.currentTime = pct * crVideo.duration;
+});
+document.addEventListener('mouseup', () => { crDragging = false; });
+
+// Touch seek
+crSeekWrap.addEventListener('touchstart', (e) => { crDragging = true; e.preventDefault(); }, { passive: false });
+document.addEventListener('touchmove', (e) => {
+  if (!crDragging) return;
+  const touch = e.touches[0];
+  const rect  = crSeekTrack.getBoundingClientRect();
+  const pct   = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
+  crVideo.currentTime = pct * crVideo.duration;
+}, { passive: true });
+document.addEventListener('touchend', () => { crDragging = false; });
+
+// Volume
+function crSetVolume(v) {
+  crVideo.volume = parseFloat(v);
+  crMuted = (v == 0);
+  crUpdateVolIcon();
+}
+function crToggleMute() {
+  crMuted = !crMuted;
+  crVideo.muted = crMuted;
+  document.getElementById('crVolSlider').value = crMuted ? 0 : crVideo.volume;
+  crUpdateVolIcon();
+}
+function crUpdateVolIcon() {
+  const icon = document.getElementById('crVolIcon');
+  if (crMuted || crVideo.volume === 0) {
+    icon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>';
+  } else {
+    icon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>';
+  }
+}
+
+// Speed
+function crSetSpeed(v) { crVideo.playbackRate = parseFloat(v); }
+
+// Fullscreen
+function crFullscreen() {
+  const wrap = document.getElementById('crVideoWrap');
+  if (wrap.requestFullscreen) wrap.requestFullscreen();
+  else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+}
+
+// Chapters toggle
+let crChaptersOpen = false;
+function crToggleChapters() {
+  crChaptersOpen = !crChaptersOpen;
+  const list = document.getElementById('crChaptersList');
+  const btn  = document.getElementById('crChaptersBtn');
+  list.classList.toggle('open', crChaptersOpen);
+  btn.classList.toggle('active', crChaptersOpen);
+}
+
+// Build chapter dots on seek bar + chapter list pills
+function crBuildChapters() {
+  const track   = document.getElementById('crSeekTrack');
+  const inner   = document.getElementById('crChaptersInner');
+  inner.innerHTML = '';
+
+  crChapters.forEach((ch, i) => {
+    const pct = (ch.start / crVideo.duration) * 100;
+
+    // Dot on seek bar
+    const dot = document.createElement('div');
+    dot.className = 'cr-chapter-dot';
+    dot.style.left = pct + '%';
+    dot.setAttribute('data-idx', i);
+
+    // Tooltip inside dot
+    const tip = document.createElement('div');
+    tip.className = 'cr-chapter-tooltip';
+    tip.innerHTML = `<div class="cr-chapter-tooltip-name">${ch.name}</div>
+                     <div class="cr-chapter-tooltip-time">${crFmtTime(ch.start)}</div>`;
+    dot.appendChild(tip);
+
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      crVideo.currentTime = ch.start;
+      if (!crPlaying) crVideo.play().catch(() => {});
+    });
+    track.appendChild(dot);
+
+    // Pill in chapter list
+    const pill = document.createElement('div');
+    pill.className = 'cr-chapter-pill';
+    pill.innerHTML = `
+      <div class="cr-chapter-now-bar"></div>
+      <div class="cr-chapter-pill-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="cr-chapter-pill-dot"></div>
+      <div class="cr-chapter-pill-info">
+        <div class="cr-chapter-pill-name">${ch.name}</div>
+        <div class="cr-chapter-pill-time">${crFmtTime(ch.start)}</div>
+      </div>
+      <div class="cr-chapter-pill-arrow">→</div>
+    `;
+    pill.addEventListener('click', () => {
+      crVideo.currentTime = ch.start;
+      if (!document.getElementById('crGate').classList.contains('hidden')) crGatePlay();
+      else if (!crPlaying) crVideo.play().catch(() => {});
+    });
+    inner.appendChild(pill);
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   FIREBASE MINI PLAYER
+═══════════════════════════════════════════════ */
+
+const crFbVideo = document.getElementById('crFbVideo');
+let crFbPlaying = false;
+
+function crFmtFbTime(s) {
+  if (isNaN(s)) return '—';
+  const m = Math.floor(s / 60);
+  return m + ':' + String(Math.floor(s % 60)).padStart(2,'0');
+}
+
+function crToggleFirebase() {
+  const panel = document.getElementById('crFirebasePanel');
+  panel.classList.toggle('open');
+  // Lazy-load video on first open
+  if (panel.classList.contains('open') && crFbVideo.preload === 'none') {
+    crFbVideo.preload = 'metadata';
+    crFbVideo.load();
+  }
+}
+
+function crFbGatePlay() {
+  document.getElementById('crFbGate').classList.add('hidden');
+  crFbVideo.play().then(() => { crFbPlaying = true; crFbUpdateIcon(); }).catch(() => {});
+}
+
+function crFbTogglePlay() {
+  if (!document.getElementById('crFbGate').classList.contains('hidden')) {
+    crFbGatePlay(); return;
+  }
+  if (crFbPlaying) crFbVideo.pause();
+  else crFbVideo.play().catch(() => {});
+}
+
+function crFbUpdateIcon() {
+  document.getElementById('crFbPlayIcon').innerHTML = crFbPlaying
+    ? '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>'
+    : '<path d="M8 5v14l11-7z"/>';
+}
+
+crFbVideo.addEventListener('play',  () => { crFbPlaying = true;  crFbUpdateIcon(); });
+crFbVideo.addEventListener('pause', () => { crFbPlaying = false; crFbUpdateIcon(); });
+crFbVideo.addEventListener('ended', () => { crFbPlaying = false; crFbUpdateIcon(); });
+
+crFbVideo.addEventListener('loadedmetadata', () => {
+  document.getElementById('crFbDuration').textContent = crFmtFbTime(crFbVideo.duration);
+});
+
+crFbVideo.addEventListener('timeupdate', () => {
+  const pct = (crFbVideo.currentTime / crFbVideo.duration) * 100 || 0;
+  document.getElementById('crFbSeekFill').style.width = pct + '%';
+  document.getElementById('crFbSeekThumb').style.left = pct + '%';
+  document.getElementById('crFbCurrentTime').textContent = crFmtFbTime(crFbVideo.currentTime);
+});
+
+// Firebase seek
+const crFbSeekWrap = document.getElementById('crFbSeekWrap');
+crFbSeekWrap.addEventListener('click', (e) => {
+  const rect = crFbSeekWrap.getBoundingClientRect();
+  const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  crFbVideo.currentTime = pct * crFbVideo.duration;
+});
+
+let crFbDragging = false;
+crFbSeekWrap.addEventListener('mousedown', () => { crFbDragging = true; });
+document.addEventListener('mousemove', (e) => {
+  if (!crFbDragging) return;
+  const rect = crFbSeekWrap.getBoundingClientRect();
+  const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  crFbVideo.currentTime = pct * crFbVideo.duration;
+});
+document.addEventListener('mouseup', () => { crFbDragging = false; });
+
+function crFbFullscreen() {
+  const wrap = document.getElementById('crFbPlayerWrap');
+  if (wrap.requestFullscreen) wrap.requestFullscreen();
+  else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+}
+
+
+
+
+/* ── Animation Tab Switcher ── */
+function crSwitchAnimTab(tab) {
+  const vizPanel = document.getElementById('crPanelViz');
+  const wfPanel  = document.getElementById('crPanelWf');
+  const vizTab   = document.getElementById('crTabViz');
+  const wfTab    = document.getElementById('crTabWf');
+
+  if (tab === 'viz') {
+    vizPanel.style.display = '';
+    wfPanel.style.display  = 'none';
+    vizTab.classList.add('active');
+    wfTab.classList.remove('active');
+  } else {
+    vizPanel.style.display = 'none';
+    wfPanel.style.display  = '';
+    wfTab.classList.add('active');
+    vizTab.classList.remove('active');
+  }
 }
 
 </script>
